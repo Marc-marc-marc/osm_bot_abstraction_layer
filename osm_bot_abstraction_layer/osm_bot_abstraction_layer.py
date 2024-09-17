@@ -36,11 +36,12 @@ class ChangesetBuilder:
         if automatic_status == fully_automated_description():
             if osm_wiki_documentation_page == None or discussion_url == None:
                 raise "missing links to the automatic edit documentation!"
-            self.changeset_description['bot'] = 'yes' # recommended on https://wiki.openstreetmap.org/wiki/Automated_Edits_code_of_conduct
-            self.changeset_description["discussion_before_edits"] = discussion_url
-            self.changeset_description["osm_wiki_documentation_page"] = osm_wiki_documentation_page
-        self.changeset_description['created_by_library'] = "https://github.com/matkoniecz/osm_bot_abstraction_layer"
-        self.changeset_description['cases_where_human_help_is_required'] = 'https://matkoniecz.github.io/OSM-wikipedia-tag-validator-reports/'
+            #duplicate of mechanical=yes
+            #self.changeset_description['bot'] = 'yes' # recommended on https://wiki.openstreetmap.org/wiki/Automated_Edits_code_of_conduct
+            self.changeset_description["email"] = discussion_url
+            self.changeset_description["website"] = osm_wiki_documentation_page
+        #self.changeset_description['created_by_library'] = "https://github.com/matkoniecz/osm_bot_abstraction_layer"
+        #self.changeset_description['cases_where_human_help_is_required'] = 'https://matkoniecz.github.io/OSM-wikipedia-tag-validator-reports/'
         if source != None:
             self.changeset_description["source"] = source
         self.changeset_description['comment'] = output_full_comment_get_comment_within_limit(affected_objects_description, comment)
