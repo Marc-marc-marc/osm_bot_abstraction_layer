@@ -43,6 +43,7 @@ class ChangesetBuilder:
         if automatic_status not in [fully_automated_description(), manually_reviewed_description()]:
             raise "automatic status must match either description returned by fully_automated_description() or manually_reviewed_description() from osm_abstraction_layer"
         self.changeset_description = other_tags_dict
+        self.changeset_description["is_in"] = "France"
         self.changeset_description['mechanical'] = automatic_status
         if automatic_status == fully_automated_description():
             if osm_wiki_documentation_page == None or discussion_url == None:
