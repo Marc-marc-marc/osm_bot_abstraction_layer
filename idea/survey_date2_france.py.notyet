@@ -1,0 +1,28 @@
+#!/usr/bin/python3
+
+from osm_bot_abstraction_layer.generic_bot_retagging import run_simple_retagging_task
+
+def edit_element(tags):
+    if tags.get('source') == ("survey 2026"):
+        tags['survey:date'] = "2026-01"
+        tags.pop('source', None)
+    return tags
+
+def main():
+    run_simple_retagging_task(
+        max_count_of_elements_in_one_changeset=5,
+        objects_to_consider_query="""
+[out:xml][timeout:300];
+area[name=France][type=boundary][boundary=administrative][admin_level=2]->.a;
+node['source'='survey 2026'][!fixme][!FIXME](area.a);
+out body 1;>;out skel qt;
+""",
+        cache_folder_filepath='/tmp',
+        is_in_manual_mode=False,
+        changeset_comment='remplacement de source="survey 2026" par l attribut documente, plus structuré et plus courant survey:date',
+        discussion_url='au stade de l\'idee en test',
+        osm_wiki_documentation_page='https://wiki.openstreetmap.org/wiki/Key:survey:date',
+        edit_element_function=edit_element,
+    )
+
+main()
